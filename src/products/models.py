@@ -1,5 +1,4 @@
 from django.db import models
-from django.contrib.auth.models import User
 
 
 class Product(models.Model):
@@ -14,14 +13,23 @@ class Product(models.Model):
 
     date = models.DateTimeField(auto_now_add=True)
 
+    class Meta :
+        verbose_name_plural = "محصولات"
 
 class ProductComment(models.Model):
-    user = models.OneToOneField(User,on_delete=models.CASCADE)
+    user = models.OneToOneField('account.User',on_delete=models.CASCADE)
     forproduct = models.OneToOneField(Product,on_delete=models.CASCADE)
     comment = models.TextField(max_length=100)
     date = models.DateTimeField(auto_now_add=True)
+
+    class Meta :
+        verbose_name_plural = "کامنت های محصولات"
+
 
 class ProductCategory(models.Model):
     category_name = models.CharField(max_length=20)
     category_image = models.ImageField()
     products = models.ManyToManyField(Product)
+
+    class Meta :
+        verbose_name_plural = "دسته بندی های محصولات"
