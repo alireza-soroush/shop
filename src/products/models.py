@@ -8,7 +8,7 @@ class Product(models.Model):
 
     amount = models.PositiveSmallIntegerField('مقدار موجود',null=False,blank=False)
     price = models.PositiveIntegerField('قیمت',null=False,blank=False)
-
+    sales = models.SmallIntegerField('فروش',default=0,editable=False)
     image = models.ImageField('عکس',upload_to=rename_file)
 
     date = models.DateTimeField('تاریخ',auto_now_add=True)

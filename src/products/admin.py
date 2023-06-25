@@ -1,9 +1,6 @@
 from django.contrib import admin
 from .models import Product,ProductComment,ProductCategory
-
-admin.site.register(ProductComment)
-
-
+from jalali_date import datetime2jalali
 
 
 class PriceRangeFilter(admin.SimpleListFilter):
@@ -28,12 +25,68 @@ class PriceRangeFilter(admin.SimpleListFilter):
         if self.value() == '500001<=':
             return queryset.filter(price__gte=500001)
 
+class SalesRangeFilter(admin.SimpleListFilter):
+    title = 'مقدار فروش'
+    parameter_name = 'sales'
+
+    def lookups(self, request , model_admin):
+        return (
+            ("0-10", '0-10 فروخته شده'),
+            ("11-30", '11-30 فروخته شده'),
+            ("31-100", '31-100 فروخته شده'),
+            ("101<=", '101 بیشتر از'),
+        )
+    
+
+    def queryset(self, request , queryset):
+        if self.value() == '0-10':
+            return queryset.filter(sales__lte = 10)
+        elif self.value() == '11-30':
+            return queryset.filter(sales__range = (11,30))
+        elif self.value() == '31-100':
+            return queryset.filter(sales__range = (31,100))
+        elif self.value() == '101<=':
+            return queryset.filter(sales__gte = 101)
+
+
+
+class AmountLeftRange(admin.SimpleListFilter):
+    title = 'مقدار موجود'
+    parameter_name = 'amount'
+
+    def lookups(self, request , model_admin):
+        return (
+            ('0-10','0-10 موجود'),
+            ('11-20','11-20 موجود'),
+            ('21-40','21-40 موجود'),
+            ('41-100','41-100 موجود'),
+            ('101<=','101 بیشتر از'),
+        )
+    
+    def queryset(self, request , queryset):
+        if self.value() == '0-10':
+            return queryset.filter(amount__lte = 10)
+        elif self.value() == '11-20':
+            return queryset.filter(amount__range = (11,20))
+        elif self.value() == '21-40':
+            return queryset.filter(amount__range = (21,40))
+        elif self.value() == '41-100':
+            return queryset.filter(amount__range = (41,100))
+        elif self.value() == '101<=':
+            return queryset.filter(amount__gte = 101)
+
+
+
 @admin.register(Product)
 class Product(admin.ModelAdmin):
-    list_display = ('title','amount','price','date')
+    list_display = ('title','amount','price','sales','get_created_jalali')
     ordering = ('id',)
     search_fields = ('title',)
-    list_filter = ('amount',PriceRangeFilter,'date')
+    list_filter = (AmountLeftRange,PriceRangeFilter,SalesRangeFilter,'date')
+
+    @admin.display(description='تاریخ')
+    def get_created_jalali(self, obj):
+        return datetime2jalali(obj.date).strftime('%a, %d %b %Y %H:%M:%S')
 
 
 
@@ -92,3 +145,13 @@ class ProductCategory(admin.ModelAdmin):
     ordering = ('id',)
     search_fields = ('category_name',)
     list_filter = (ProductCategoryRange,)
+
+
+
+
+@admin.register(ProductComment)
+class ProductComment(admin.ModelAdmin):
+    list_display = ('user','forproduct','comment','date')
+    ordering = ('date',)
+    search_fields = ('comment','forproduct')
+    list_filter = ('date','forproduct')

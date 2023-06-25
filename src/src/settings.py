@@ -1,5 +1,4 @@
 from pathlib import Path
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -34,6 +33,7 @@ INSTALLED_APPS = [
     'account',
     #third party apps
     'widget_tweaks',
+    'jalali_date',
 ]
 
 MIDDLEWARE = [
@@ -101,7 +101,6 @@ AUTH_USER_MODEL = 'account.User'
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
 LANGUAGE_CODE = 'fa'
-
 TIME_ZONE = 'Asia/Tehran'
 
 USE_I18N = True
