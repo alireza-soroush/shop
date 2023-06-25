@@ -54,8 +54,8 @@
                     <div class="card side-category p-4 mb-3">
                             <ul class="list-unstyled">
                             
-                            <li><a href="?order=newest"><span>جدیدترین</span></a>
-                                <a href="?order=newest">
+                            <li><a href="?order=latest"><span>جدیدترین</span></a>
+                                <a href="?order=latest">
                                     <div class="arrow-cat d-flex align-items-center justify-content-center">
                                     <svg width="12" height="11" viewBox="0 0 12 11" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M10.8019 6.17453H2.56566C2.00285 6.17453 1.53613 5.70782 1.53613 5.14501C1.53613 4.5822 2.00285 4.11548 2.56566 4.11548H10.8019C11.3647 4.11548 11.8314 4.5822 11.8314 5.14501C11.8314 5.70782 11.3647 6.17453 10.8019 6.17453Z" fill="#292D32"/>
@@ -137,8 +137,11 @@
                                                     <path d="M3.59 2.69L3.39 5.14C3.35 5.61 3.72 6 4.19 6H19.5C19.92 6 20.27 5.68 20.3 5.26C20.43 3.49 19.08 2.05 17.31 2.05H5.02C4.92 1.61 4.72 1.19 4.41 0.84C3.91 0.31 3.21 0 2.49 0H0.75C0.34 0 0 0.34 0 0.75C0 1.16 0.34 1.5 0.75 1.5H2.49C2.8 1.5 3.09 1.63 3.3 1.85C3.51 2.08 3.61 2.38 3.59 2.69Z" fill="#FFAA00"/>
                                                     <path d="M19.2601 7.5H3.92005C3.50005 7.5 3.16005 7.82 3.12005 8.23L2.76005 12.58C2.62005 14.29 3.96005 15.75 5.67005 15.75H16.7901C18.2901 15.75 19.6101 14.52 19.7201 13.02L20.0501 8.35C20.0901 7.89 19.7301 7.5 19.2601 7.5Z" fill="#FFAA00"/>
                                                     </svg>
-                                                    
+                                                {%if product.amount%}
                                                 <span class="text-center">افزودن به سبد خرید</span>
+                                                {%else%}
+                                                <span class="text-center">اتمام موجودی</span>
+                                                {%endif%}
                                             </div>
                                             
                                         </div>

@@ -15,7 +15,7 @@ def product_page(request):
         p_category = ProductCategory.objects.get(pk=category)
         paginate = p_category.products.all()
     elif order:
-        if order=='newest':
+        if order=='latest':
             paginate = Product.objects.order_by('-date')
         elif order == 'expensive':
             paginate = Product.objects.order_by('-price')
