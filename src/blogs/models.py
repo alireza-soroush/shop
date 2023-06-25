@@ -11,11 +11,12 @@ class Blog(models.Model):
     @property
     def views(self):
         return BlogViews.objects.filter(blog=self).count()
+    views.fget.short_description = 'بازدید ها'
+    
     @classmethod
     def get_views(self):
         for blog in self.objects.all():
             yield(blog.id,blog.views)
-            
     
     class Meta:
          verbose_name = 'بلاگ'
