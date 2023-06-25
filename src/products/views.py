@@ -21,6 +21,11 @@ def product_page(request):
             paginate = Product.objects.order_by('-price')
         elif order == 'cheap':
             paginate = Product.objects.order_by('price')
+        elif order == 'most-sales':
+            paginate = Product.objects.order_by('-sales')
+        
+        else:
+            paginate = Product.objects.order_by('-date')
 
     else:
         paginate = Product.objects.order_by('-date')

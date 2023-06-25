@@ -55,7 +55,7 @@
                             <ul class="list-unstyled">
                             
                             <li><a href="?order=newest"><span>جدیدترین</span></a>
-                                <a href="#">
+                                <a href="?order=newest">
                                     <div class="arrow-cat d-flex align-items-center justify-content-center">
                                     <svg width="12" height="11" viewBox="0 0 12 11" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M10.8019 6.17453H2.56566C2.00285 6.17453 1.53613 5.70782 1.53613 5.14501C1.53613 4.5822 2.00285 4.11548 2.56566 4.11548H10.8019C11.3647 4.11548 11.8314 4.5822 11.8314 5.14501C11.8314 5.70782 11.3647 6.17453 10.8019 6.17453Z" fill="#292D32"/>
@@ -65,7 +65,7 @@
                                 </a>
                             </li>
                             <li><a href="?order=expensive"><span>گران ترین</span></a>
-                                <a href="#">
+                                <a href="?order=expensive">
                                     <div class="arrow-cat d-flex align-items-center justify-content-center">
                                     <svg width="12" height="11" viewBox="0 0 12 11" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M10.8019 6.17453H2.56566C2.00285 6.17453 1.53613 5.70782 1.53613 5.14501C1.53613 4.5822 2.00285 4.11548 2.56566 4.11548H10.8019C11.3647 4.11548 11.8314 4.5822 11.8314 5.14501C11.8314 5.70782 11.3647 6.17453 10.8019 6.17453Z" fill="#292D32"/>
@@ -75,7 +75,7 @@
                                 </a>
                             </li>
                             <li><a href="?order=cheap"><span>ارزان ترین</span></a>
-                                <a href="#">
+                                <a href="?order=cheap">
                                     <div class="arrow-cat d-flex align-items-center justify-content-center">
                                     <svg width="12" height="11" viewBox="0 0 12 11" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M10.8019 6.17453H2.56566C2.00285 6.17453 1.53613 5.70782 1.53613 5.14501C1.53613 4.5822 2.00285 4.11548 2.56566 4.11548H10.8019C11.3647 4.11548 11.8314 4.5822 11.8314 5.14501C11.8314 5.70782 11.3647 6.17453 10.8019 6.17453Z" fill="#292D32"/>
@@ -84,8 +84,8 @@
                                     </div>
                                 </a>
                             </li>
-                            <li><a href="#"><span>پرفروش ترین</span></a>
-                                <a href="#">
+                            <li><a href="?order=most-sales"><span>پرفروش ترین</span></a>
+                                <a href="?order=most-sales">
                                     <div class="arrow-cat d-flex align-items-center justify-content-center">
                                     <svg width="12" height="11" viewBox="0 0 12 11" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M10.8019 6.17453H2.56566C2.00285 6.17453 1.53613 5.70782 1.53613 5.14501C1.53613 4.5822 2.00285 4.11548 2.56566 4.11548H10.8019C11.3647 4.11548 11.8314 4.5822 11.8314 5.14501C11.8314 5.70782 11.3647 6.17453 10.8019 6.17453Z" fill="#292D32"/>
@@ -97,7 +97,7 @@
                             <hr>
                             {%for category in categories%}
                             <li><a href="?category={{category.id}}"><span>{{category.category_name}}</span></a>
-                                <a href="#">
+                                <a href="?category={{category.id}}">
                                     <div class="arrow-cat d-flex align-items-center justify-content-center">
                                     <svg width="12" height="11" viewBox="0 0 12 11" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M10.8019 6.17453H2.56566C2.00285 6.17453 1.53613 5.70782 1.53613 5.14501C1.53613 4.5822 2.00285 4.11548 2.56566 4.11548H10.8019C11.3647 4.11548 11.8314 4.5822 11.8314 5.14501C11.8314 5.70782 11.3647 6.17453 10.8019 6.17453Z" fill="#292D32"/>

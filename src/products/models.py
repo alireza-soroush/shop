@@ -2,7 +2,7 @@ from django.db import models
 from alireza.django_tools import rename_file
 
 class Product(models.Model):
-    title = models.CharField('موضوع',max_length=20,null=False,blank=False)
+    title = models.CharField('محصول',max_length=20,null=False,blank=False)
     description = models.CharField('توضیحات',max_length=50,null=False,blank=False)
     extra_description = models.TextField('توضیحات اضافه',max_length=400,null=False,blank=False)
 
