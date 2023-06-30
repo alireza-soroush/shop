@@ -1,6 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from .models import Blog,BlogViews
 from django.core.paginator import Paginator
+from .forms import BlogForm
+from django.contrib.auth.decorators import login_required
 
 
 def blog_page(request):
@@ -52,4 +54,30 @@ def blog_object(request,b_id):
     
     #recomended
     recommended = Blog.objects.order_by('?').exclude(pk=b_id)[0:3]
-    return render(request,'blogs/page-blog.html',{'blog':blog_details,'recommended':recommended})
+
+    #Blog comment form
+    @login_required(login_url='login_page')
+    def blog_comment(request,b_id):
+            form = BlogForm(request.POST)
+            if form.is_valid():
+                obj = form.save(commit=False)
+                obj.user = request.user
+                obj.for_blog = Blog.objects.get(pk=b_id)
+                obj.save()
+                form = BlogForm()
+                return True
+            else:
+                return False
+            
+    form = BlogForm()
+    if request.method == 'POST':
+        if request.user.is_authenticated:
+            blog_comment(request,b_id)
+        else:
+            return redirect('login_page')
+            
+        
+
+    return render(request,'blogs/page-blog.html',{'blog':blog_details,'recommended':recommended,'form':form})
+
+

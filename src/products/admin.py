@@ -1,4 +1,6 @@
+from typing import Any, List, Optional, Tuple
 from django.contrib import admin
+from django.db.models.query import QuerySet
 from .models import Product,ProductComment,ProductCategory
 from jalali_date import datetime2jalali
 
@@ -18,11 +20,11 @@ class PriceRangeFilter(admin.SimpleListFilter):
     def queryset(self, request, queryset):
         if self.value() == '0-100000':
             return queryset.filter(price__lte=100000)
-        if self.value() == '100001-250000':
+        elif self.value() == '100001-250000':
             return queryset.filter(price__range=(100001, 250000))
-        if self.value() == '250001-500000':
+        elif self.value() == '250001-500000':
             return queryset.filter(price__range=(250001, 500000))
-        if self.value() == '500001<=':
+        elif self.value() == '500001<=':
             return queryset.filter(price__gte=500001)
 
 class SalesRangeFilter(admin.SimpleListFilter):
@@ -113,35 +115,35 @@ class ProductCategoryRange(admin.SimpleListFilter):
                 if n <= 5:
                     in_id.append(i.id)
             return queryset.filter(pk__in=in_id)
-        if self.value() == '6-10':
+        elif self.value() == '6-10':
             for i in queryset:
                 n = i.products.all().count()
                 if n in range(6,11):
                     in_id.append(i.id)
             return queryset.filter(pk__in=in_id)
-        if self.value() == '11-20':
+        elif self.value() == '11-20':
             for i in queryset:
                 n = i.products.all().count()
                 if n in range(11,21):
                     in_id.append(i.id)
             return queryset.filter(pk__in=in_id)
-        if self.value() == '21-50':
+        elif self.value() == '21-50':
             for i in queryset:
                 n = i.products.all().count()
                 if n in range(21,51):
                     in_id.append(i.id)
             return queryset.filter(pk__in=in_id)
-        if self.value() == '51<=':
+        elif self.value() == '51<=':
             for i in queryset:
                 n = i.products.all().count()
                 if n >= 51:
                     in_id.append(i.id)
             return queryset.filter(pk__in=in_id)
-            
+
 
 @admin.register(ProductCategory)
 class ProductCategory(admin.ModelAdmin):
-    list_display = ('category_name','id')
+    list_display = ('category_name','inside_items')
     ordering = ('id',)
     search_fields = ('category_name',)
     list_filter = (ProductCategoryRange,)

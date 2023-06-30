@@ -18,6 +18,9 @@ class Blog(models.Model):
         for blog in self.objects.all():
             yield(blog.id,blog.views)
     
+
+    def __str__(self):
+        return self.title
     class Meta:
          verbose_name = 'بلاگ'
          verbose_name_plural = "بلاگ"
@@ -25,9 +28,9 @@ class Blog(models.Model):
 
 
 class BlogComment(models.Model):
-    user = models.OneToOneField('account.User',verbose_name='کاربر',on_delete=models.CASCADE)
-    for_blog= models.OneToOneField(Blog,verbose_name='برای بلاگ',on_delete=models.CASCADE)
-    comment = models.TextField('کامنت',max_length=100)
+    user = models.ForeignKey('account.User',verbose_name='کاربر',on_delete=models.CASCADE)
+    for_blog= models.ForeignKey(Blog,verbose_name='برای بلاگ',on_delete=models.CASCADE)
+    comment = models.TextField('کامنت',max_length=200)
     date = models.DateTimeField('تاریخ',auto_now_add=True)
 
     class Meta:

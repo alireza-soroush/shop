@@ -42,3 +42,10 @@ class ProductCategory(models.Model):
 
     def __str__(self):
         return self.category_name
+    
+    @property
+    def inside_items(self):
+        return self.products.count()
+    inside_items.fget.short_description = 'تعداد محصول'
+
+    

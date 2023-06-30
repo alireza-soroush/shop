@@ -2,11 +2,6 @@ from django.contrib import admin
 from .models import Blog,BlogComment
 from jalali_date import datetime2jalali
 
-admin.site.register(BlogComment)
-
-
-
-
 
 
 class ViewsRangeFilter(admin.SimpleListFilter):
@@ -74,6 +69,21 @@ class Blog(admin.ModelAdmin):
     search_fields = ('title','author')
     list_filter = ('date',ViewsRangeFilter,'author')
 
+
+    @admin.display(description='تاریخ')
+    def get_created_jalali(self, obj):
+        return datetime2jalali(obj.date).strftime('%a, %d %b %Y %H:%M:%S')
+
+
+
+
+
+
+
+@admin.register(BlogComment)
+class BlogComment(admin.ModelAdmin):
+    list_display = ('user','for_blog','comment','get_created_jalali')
+    list_filter = ('date','for_blog')
 
     @admin.display(description='تاریخ')
     def get_created_jalali(self, obj):
