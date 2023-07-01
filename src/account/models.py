@@ -1,7 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.utils.translation import gettext_lazy as _
-
+from django.core.validators import RegexValidator
+from alireza.django_tools import rename_file
 
 class UserManager(BaseUserManager):
     """Define a model manager for User model with no username field."""
@@ -55,6 +56,16 @@ class UserManager(BaseUserManager):
         return self._create_user(email, password, **extra_fields)
     
 
+
+def rename_profile_pic(instance,filename):
+    return rename_file(instance,filename,hardpath='profile')
+
+
+GENDERS = (
+    ('none',_('هیچکدام')),
+    ('male',_('مرد')),
+    ('female',_('زن')),
+)
 class User(AbstractUser):
     """User model."""
 
@@ -64,6 +75,8 @@ class User(AbstractUser):
     email = models.EmailField(_('email address'), unique=True)
 
     #personal info
+    gender = models.CharField('جنسیت',choices=GENDERS,max_length=7,default=('none','هیچکدام'))
+    image = models.ImageField('عکس',upload_to=rename_profile_pic,default='profile/fca26d60-61dc-49da-b217-d5e760580630.png',null=True,blank=True)
     company = models.CharField(_("کمپانی"),max_length=25,null=True,blank=True)
     area = models.CharField(_("منطقه"),max_length=25,null=True,blank=True)
     state= models.CharField(_("استان"),max_length=30,null=False,blank=False,)
@@ -71,7 +84,8 @@ class User(AbstractUser):
     street = models.CharField(_("خیابان"),max_length=80,null=False,blank=False)
     house_plate = models.SmallIntegerField(_("پلاک"),null=False,blank=False)
     zipcode = models.IntegerField(_("کد پستی"),null=False,blank=False)
-    phone = models.IntegerField(_("تلفن"),null=False,blank=False)
+    phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")
+    phone = models.CharField(_("تلفن"),null=False,blank=False,validators=[phone_regex], max_length=17)
     cart = models.ManyToManyField(verbose_name=_("خرید ها"),to='products.Product',blank=True)
 
     USERNAME_FIELD = 'email'

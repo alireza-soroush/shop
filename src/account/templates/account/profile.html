@@ -1,0 +1,121 @@
+{%load static%}
+{%load widget_tweaks%}
+<html dir="rtl" lang="fa-IR">
+<head>
+    <title>صفحه ثبت نام - دمو 1</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 , maximum-scale=1">
+    <link href="{%static 'assets/Css/Main.css'%}" rel="stylesheet" />
+    <link href="{%static 'assets/Css/Menu.css'%}" rel="stylesheet" />
+    <link href="{%static 'assets/Css/Style.css'%}" rel="stylesheet" />
+    <link href="{%static 'assets/Css/owl.carousel.min.css'%}" rel="stylesheet" />
+    <link href="{%static 'assets/Css/owl.theme.min.css'%}" rel="stylesheet" />
+    <style type="">
+        input[type='file'] {
+           color: transparent;
+           
+        }
+    </style>
+</head>
+
+<body class="rtl">
+        <!--mobile navbar-->
+        {%include 'mobilenav.html'%}
+        <!--end mobile navbar-->
+
+        <!--header-->
+        {%include 'navbar.html'%}
+        <!--end header-->
+
+        <div class="clearfix"></div>
+        <br>
+            <div class="container">
+           
+                <div class="row d-flex align-items-center ">
+
+                  <div class="text-center">
+                    <div class="d-flex align-items-center mb-3">
+                        <svg width="51" height="51" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M35.776 31.7942C35.3054 29.679 34.1759 27.7667 32.9292 25.9965C30.0075 21.85 25.329 17.6627 20.0025 17.6627C14.698 17.6627 9.99787 21.8491 7.07574 25.9965C5.82905 27.7667 4.7019 29.6766 4.22892 31.7942C3.75593 33.9119 4.01478 36.2805 5.3283 37.9991C6.64182 39.7176 9.13097 40.5816 11.0756 39.649C12.2324 39.0953 13.169 37.9789 14.4448 37.8712C15.6167 37.773 16.6521 38.5608 17.6291 39.2198C18.335 39.696 19.1869 40.1294 20.0025 40.135C20.8181 40.1294 21.6694 39.696 22.3758 39.2198C23.3529 38.5617 24.3882 37.773 25.5601 37.8712C26.836 37.9789 27.7721 39.0934 28.9293 39.649C30.874 40.5816 33.3631 39.7214 34.6766 38.001C35.9902 36.2805 36.249 33.9123 35.776 31.7942ZM24.6424 29.2432C24.0414 30.3403 23.0931 31.3063 22.2921 32.0579C21.8629 32.4609 21.4108 32.8388 20.9381 33.1899H20.9353C20.6648 33.3882 20.338 33.4951 20.0025 33.4951C19.6669 33.4951 19.3402 33.3882 19.0697 33.1899H19.0669C18.5941 32.8388 18.142 32.4609 17.7129 32.0579C16.9128 31.3058 15.9635 30.3403 15.3626 29.2432C14.866 28.3374 14.6067 27.3423 14.8637 26.3053C15.1103 25.3116 15.8953 24.4387 16.8582 24.3169C17.9717 24.1759 19.2683 24.9586 20.0025 25.8573C20.7366 24.9586 22.0332 24.1764 23.1467 24.3174C24.1096 24.4392 24.8946 25.3121 25.1413 26.3058C25.3982 27.3423 25.1389 28.3374 24.6424 29.2432Z" fill="#FFAA00"/>    
+                            </svg>
+                            
+                            <h2 class="mr-3"> پروفایل</h2>
+                        
+        
+                        </div>
+                    <div class="card p-5">
+                    <form class="contact-form" method="POST" enctype="multipart/form-data">
+                        {%csrf_token%}
+                        <center>
+                        <div class="col-lg-5 d-flex align-items-center" >
+                            <img src="{{profile_image.url}}" class="img-fluid wapp" style="width: 300px;height: 300px;border-radius: 50%;"/>
+                        </div></center><br>
+                        <div class="align-items-center">
+                        <label for="image"> تغییر عکس  </label>
+                        {%render_field form.image%}</div>
+                        <hr>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                {%render_field form.first_name class="form-control mb-2" placeholder="نام"%}
+                            </div>
+                            <div class="form-group col-md-6">
+                                {%render_field form.last_name  class="form-control mb-2" placeholder="نام خانوادگی"%}
+                            </div>
+                            <div class="form-group col-md-6">
+                                {%render_field form.phone class="form-control mb-2" placeholder="شماره موبایل"%}
+                            </div>
+                            <div class="form-group col-md-6">
+                                {%render_field form.email class="form-control mb-2" placeholder="پست الکترونیکی"%}
+                            </div>
+                            <div class="form-group col-md-6">
+                                {%render_field form.area class="form-control mb-2" placeholder="منطقه (اختیاری)"%}
+                            </div>
+                            <div class="form-group col-md-6">
+                                {%render_field form.company class="form-control mb-2" placeholder="شرکت‌ (اختیاری)"%}
+                            </div>
+                            <div class="form-group col-md-6">
+                                {%render_field form.state class="form-control mb-2" placeholder="استان"%}
+                            </div>
+                            <div class="form-group col-md-6">
+                                {%render_field form.city class="form-control mb-2" placeholder="شهر"%}
+                            </div>
+                            <div class="form-group col-md-6">
+                                {%render_field form.street class="form-control mb-2" placeholder="خیابان"%}
+                            </div>
+                            <div class="form-group col-md-6">
+                                {%render_field form.house_plate class="form-control mb-2" placeholder="پلاک"%}
+                            </div>
+                            <div class="form-group col-md-6">
+                                {%render_field form.zipcode class="form-control mb-2" placeholder="کدپستی"%}
+                            </div>
+                            <div class="form-group col-md-6">
+                                {%render_field form.gender  class="form-control mb-2" style="height: 87%;"%}
+                            </div>
+                            <div class="form-group col-md-6 d-flex justify-content-start">
+                                <button type="submit" style="width: 100%;" class="btn btn-lightorng login-btn">تغییر پروفایل</button>
+                            </div>
+                            <div class="form-group col-md-6 d-flex justify-content-end">
+                                <a class="btn btn-lightorng login-btn" style="width: 100%;" href="{%url 'homepage'%}">رفتن به تغییر رمز</a>
+                            </div>
+                            <div class="form-group col-md-12">
+                                 آیا میخواهید از حساب خود خارج شوید؟ روی <a style="color: red;" href="{%url 'logout_page'%}">خروج از حساب</a> کلیک کنید
+                            </div>
+                          
+                        </div>
+
+                    </form>
+                </div>
+                    </div>
+            
+            </div>
+            </div>
+        </section>
+
+    <script src="{%static 'assets/Js/jquery.min.js'%}"></script>
+    <script src="{%static 'assets/Js/bootstrap.min.js'%}"></script>
+    <script src="{%static 'assets/Js/my-script.js'%}"></script>
+    <script src="{%static 'assets/Js/custom.js'%}"></script>
+
+</body>
+</html>
