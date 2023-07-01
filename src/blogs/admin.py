@@ -84,7 +84,7 @@ class Blog(admin.ModelAdmin):
 class BlogComment(admin.ModelAdmin):
     list_display = ('user','for_blog','comment','get_created_jalali')
     list_filter = ('date','for_blog')
-
+    search_fields = ('for_blog','comment','user')
     @admin.display(description='تاریخ')
     def get_created_jalali(self, obj):
         return datetime2jalali(obj.date).strftime('%a, %d %b %Y %H:%M:%S')

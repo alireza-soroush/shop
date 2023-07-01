@@ -1,8 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.db.models import Q
 from .models import Product,ProductCategory
 from django.core.paginator import Paginator
-
+from .forms import ProductCommentsForm
+from django.contrib.auth.decorators import login_required
 
 def product_page(request):
     #categories
@@ -39,13 +40,28 @@ def product_page(request):
     return render(request,'products/shop.html',{'products':products,'categories':categories,'category':category,'order':order})
 
 
-
-
-
-
-
-
 def product_object(request,p_id):
     product = Product.objects.get(pk=p_id)
     products = Product.objects.all().filter(~Q(id=p_id)).order_by('?')[:5]
-    return render(request,'products/page-shop.html',{'product':product,'products':products})
+
+    #Comments for Product
+    @login_required(login_url='login_page')
+    def product_comment(request,p_id):
+            form = ProductCommentsForm(request.POST)
+            if form.is_valid():
+                obj = form.save(commit=False)
+                obj.user = request.user
+                obj.forproduct = Product.objects.get(pk=p_id)
+                obj.save()
+                form = ProductCommentsForm()
+                return True
+            else:
+                return False
+            
+    form = ProductCommentsForm()
+    if request.method == 'POST':
+        if request.user.is_authenticated:
+            product_comment(request,p_id)
+        else:
+            return redirect('login_page')
+    return render(request,'products/page-shop.html',{'product':product,'products':products,'form':form})

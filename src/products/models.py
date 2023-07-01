@@ -22,9 +22,9 @@ class Product(models.Model):
     
 
 class ProductComment(models.Model):
-    user = models.OneToOneField('account.User',verbose_name='کاربر',on_delete=models.CASCADE)
-    forproduct = models.OneToOneField(Product,verbose_name='برای محصول',on_delete=models.CASCADE)
-    comment = models.TextField('کامنت',max_length=100)
+    user = models.ForeignKey('account.User',verbose_name='کاربر',on_delete=models.CASCADE)
+    forproduct = models.ForeignKey(Product,verbose_name='برای محصول',on_delete=models.CASCADE)
+    comment = models.TextField('کامنت',max_length=200)
     date = models.DateTimeField('تاریخ',auto_now_add=True)
 
     class Meta :

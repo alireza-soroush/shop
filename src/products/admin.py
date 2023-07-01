@@ -1,6 +1,4 @@
-from typing import Any, List, Optional, Tuple
 from django.contrib import admin
-from django.db.models.query import QuerySet
 from .models import Product,ProductComment,ProductCategory
 from jalali_date import datetime2jalali
 
@@ -153,7 +151,11 @@ class ProductCategory(admin.ModelAdmin):
 
 @admin.register(ProductComment)
 class ProductComment(admin.ModelAdmin):
-    list_display = ('user','forproduct','comment','date')
+    list_display = ('user','forproduct','comment','get_created_jalali')
     ordering = ('date',)
     search_fields = ('comment','forproduct')
     list_filter = ('date','forproduct')
+    
+    @admin.display(description='تاریخ')
+    def get_created_jalali(self, obj):
+        return datetime2jalali(obj.date).strftime('%a, %d %b %Y %H:%M:%S')
