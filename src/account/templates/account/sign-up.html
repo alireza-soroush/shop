@@ -1,4 +1,5 @@
 ﻿{%load static%}
+{%load widget_tweaks%}
 <html dir="rtl" lang="fa-IR">
 <head>
     <title>صفحه ثبت نام - دمو 1</title>
@@ -39,27 +40,28 @@
         
                         </div>
                     <div class="card p-5">
-                    <form class="contact-form">
-                        <div class="form-row">
+                    <form class="contact-form" method="post">
+                        {%csrf_token%}
+                            <div class="form-row">
                             <div class="form-group col-md-6">
-                                <input type="text" class="form-control mb-2" placeholder="نام">
+                                {%render_field form.first_name class="form-control mb-2" placeholder="نام"%}
                             </div>
 
                             <div class="form-group col-md-6">
-                                <input type="text" class="form-control mb-2" placeholder="نام خانوادگی">
+                                {%render_field form.last_name class="form-control mb-2" placeholder="نام خانوادگی"%}
                             </div>
                             <div class="form-group col-md-6">
-                                <input type="tel" class="form-control mb-2" placeholder="شماره موبایل">
+                                {%render_field form.email class="form-control mb-2" placeholder="پست الکترونیکی"%}
                             </div>
                             <div class="form-group col-md-6">
-                                <input type="email" class="form-control mb-2" placeholder="پست الکترونیکی">
+                                {%render_field form.gender class="form-control mb-2" style="height: 85%;"%}
                             </div>
                             <div class="form-group col-md-6">
-                                <input type="password" class="form-control mb-2" placeholder="رمز عبور">
+                                {%render_field form.password1 class="form-control mb-2" placeholder="رمز عبور"%}
                             </div>
                             <div class="form-group col-md-6">
-                                <input type="password" class="form-control mb-2" placeholder="تکرار رمز عبور">
-                            </div>
+                                {%render_field form.password2 class="form-control mb-2" placeholder="تکرار رمز عبور"%}
+                            </div> 
                             <div class="form-group col-md-6 d-flex justify-content-start">
                                 <button type="submit" class="btn btn-lightorng login-btn">ثبت نام</button>
                             </div>
@@ -68,11 +70,6 @@
                             </div>
                           
                         </div>
-
-
-                     
-
-
                     </form>
                 </div>
                     </div>

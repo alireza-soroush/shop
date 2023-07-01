@@ -23,15 +23,6 @@ class UserManager(BaseUserManager):
         """Create and save a regular User with the given email and password."""
         extra_fields.setdefault('is_staff', False)
         extra_fields.setdefault('is_superuser', False)
-
-        extra_fields.setdefault('first_name','default first name')
-        extra_fields.setdefault('last_name','default last name')
-        extra_fields.setdefault('state','default state')
-        extra_fields.setdefault('city','default city')
-        extra_fields.setdefault('street','default street')
-        extra_fields.setdefault('house_plate',1)
-        extra_fields.setdefault('zipcode',1234)
-        extra_fields.setdefault('phone',1234567890)
         return self._create_user(email, password, **extra_fields)
 
     def create_superuser(self, email, password, **extra_fields):
@@ -39,14 +30,8 @@ class UserManager(BaseUserManager):
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
 
-        extra_fields.setdefault('first_name','default first name')
-        extra_fields.setdefault('last_name','default last name')
-        extra_fields.setdefault('state','default state')
-        extra_fields.setdefault('city','default city')
-        extra_fields.setdefault('street','default street')
-        extra_fields.setdefault('house_plate',0)
-        extra_fields.setdefault('zipcode',1234)
-        extra_fields.setdefault('phone',1234567890)
+        extra_fields.setdefault('first_name','your first name')
+        extra_fields.setdefault('last_name','your last name')
 
         if extra_fields.get('is_staff') is not True:
             raise ValueError('Superuser must have is_staff=True.')
@@ -79,13 +64,13 @@ class User(AbstractUser):
     image = models.ImageField('عکس',upload_to=rename_profile_pic,default='profile/fca26d60-61dc-49da-b217-d5e760580630.png',null=True,blank=True)
     company = models.CharField(_("کمپانی"),max_length=25,null=True,blank=True)
     area = models.CharField(_("منطقه"),max_length=25,null=True,blank=True)
-    state= models.CharField(_("استان"),max_length=30,null=False,blank=False,)
-    city= models.CharField(_("شهر"),max_length=30,null=False,blank=False,)
-    street = models.CharField(_("خیابان"),max_length=80,null=False,blank=False)
-    house_plate = models.SmallIntegerField(_("پلاک"),null=False,blank=False)
-    zipcode = models.IntegerField(_("کد پستی"),null=False,blank=False)
+    state= models.CharField(_("استان"),max_length=30,null=True,blank=True)
+    city= models.CharField(_("شهر"),max_length=30,null=True,blank=True)
+    street = models.CharField(_("خیابان"),max_length=80,null=True,blank=True)
+    house_plate = models.SmallIntegerField(_("پلاک"),null=True,blank=True)
+    zipcode = models.IntegerField(_("کد پستی"),null=True,blank=True)
     phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")
-    phone = models.CharField(_("تلفن"),null=False,blank=False,validators=[phone_regex], max_length=17)
+    phone = models.CharField(_("تلفن"),null=True,blank=True,validators=[phone_regex], max_length=17)
     cart = models.ManyToManyField(verbose_name=_("خرید ها"),to='products.Product',blank=True)
 
     USERNAME_FIELD = 'email'
