@@ -55,8 +55,8 @@ class User(AbstractUser):
     """User model."""
 
     username = None
-    first_name = models.CharField(_("first name"), max_length=150, blank=False,null=False)
-    last_name = models.CharField(_("last name"), max_length=150, blank=False,null=False)
+    first_name = models.CharField(_("first name"), max_length=40, blank=False,null=False)
+    last_name = models.CharField(_("last name"), max_length=40, blank=False,null=False)
     email = models.EmailField(_('email address'), unique=True)
 
     #personal info
