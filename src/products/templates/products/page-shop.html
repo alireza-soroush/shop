@@ -66,7 +66,7 @@
                                                         <path d="M19.2601 7.5H3.92005C3.50005 7.5 3.16005 7.82 3.12005 8.23L2.76005 12.58C2.62005 14.29 3.96005 15.75 5.67005 15.75H16.7901C18.2901 15.75 19.6101 14.52 19.7201 13.02L20.0501 8.35C20.0901 7.89 19.7301 7.5 19.2601 7.5Z" fill="#FFAA00"/>
                                                         </svg>
                                                     {%if p.amount %}
-                                                    <span class="text-center">افزودن به سبد خرید</span>
+                                                    <span class="text-center"><a href="{%url 'add_to_cart' p.id%}">افزودن به سبد خرید</a></span>
                                                     {%else%}
                                                     <span class="text-center">اتمام موجودی</span>
                                                     {%endif%}
@@ -104,12 +104,17 @@
                                                 <svg width="15" height="14" viewBox="0 0 15 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                     <path d="M7.24563 10.8425L3.38813 12.8706L4.125 8.575L1 5.53313L5.3125 4.90813L7.24125 1L9.17 4.90813L13.4825 5.53313L10.3575 8.575L11.0944 12.8706L7.24563 10.8425Z" fill="#FDC736" stroke="#FDC736" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                                     </svg>     
-                                                    <span class="review-no mr-2">3 بدون دیدگاه</span>                                                       
+                                                    
+                                                    <span class="review-no mr-2">{%if comments%}{{comments|length}} تعداد نظرات {%else%}بدون نظر{%endif%}</span>                                                       
                                             </div>
                                           
                                         </div>
                                         <ul class="list-unstyled">
+                                            {%if product.amount == 0%}
+                                            <li class="color-gray">موجودی: <span class="color-dark">اتمام موجودی</span></li>
+                                            {%else%}
                                             <li class="color-gray">موجودی: <span class="color-dark">{{product.amount}} عدد در انبار</span></li>
+                                            {%endif%}
                                             <li class="color-gray">توضیحات محصول: <p class="color-dark">{{product.description}}</p></li>
                              
                                         </ul>
@@ -120,9 +125,9 @@
                                         </h3>
                                         <div class="d-flex align-items-center justify-content-between my-4">
                                             {%if product.amount%}
-                                            <button class="btn btn-lightorng btn-rounded mr-1" data-toggle="tooltip" title="" data-original-title="Add to cart">
-                                                افزودن به سبد خرید
-                                            </button>
+                                            <a class="btn btn-lightorng btn-rounded mr-1" href="{%url 'add_to_cart' product.id%}" style="color: white;" data-toggle="tooltip" title="" data-original-title="Add to cart">
+                                                افزودن به سبد خرید 
+                                            </a>
                                             {%else%}
                                             <button class="btn btn-lightorng btn-rounded mr-1" data-toggle="tooltip" title="" data-original-title="Add to cart">
                                                 اتمام موجودی

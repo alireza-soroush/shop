@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.db.models import Q
-from .models import Product,ProductCategory
+from .models import Product,ProductCategory,ProductComment
 from django.core.paginator import Paginator
 from .forms import ProductCommentsForm
 from django.contrib.auth.decorators import login_required
@@ -64,4 +64,6 @@ def product_object(request,p_id):
             product_comment(request,p_id)
         else:
             return redirect('login_page')
-    return render(request,'products/page-shop.html',{'product':product,'products':products,'form':form})
+    
+    comments = ProductComment.objects.filter(forproduct_id=p_id)
+    return render(request,'products/page-shop.html',{'product':product,'products':products,'form':form,'comments':comments})

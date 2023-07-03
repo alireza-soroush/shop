@@ -6,7 +6,7 @@ class Userform(UserChangeForm):
     image=forms.ImageField(required=False ,widget=forms.FileInput())
     class Meta:
         model = User
-        fields = ('email','first_name','last_name','gender','image','company','area','state','city','street','house_plate','zipcode','phone','cart')
+        fields = ('email','first_name','last_name','gender','image','company','area','state','city','street','house_plate','zipcode','phone')
 
         
 

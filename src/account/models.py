@@ -71,7 +71,6 @@ class User(AbstractUser):
     zipcode = models.IntegerField(_("کد پستی"),null=True,blank=True)
     phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")
     phone = models.CharField(_("تلفن"),null=True,blank=True,validators=[phone_regex], max_length=17)
-    cart = models.ManyToManyField(verbose_name=_("خرید ها"),to='products.Product',blank=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
@@ -82,3 +81,16 @@ class User(AbstractUser):
     class Meta:
         verbose_name = 'کاربر'
         verbose_name_plural = 'کاربران'
+
+
+
+
+
+class CartItem(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(to='products.Product', on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
+    date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.quantity} x {self.product.title} - {self.user.email}"
