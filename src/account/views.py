@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth import login , logout , authenticate
 from django.contrib.auth.decorators import login_required
-from .forms import Userform,UserCreation
+from .forms import Userform,UserCreation,CheckoutForm
 from django.contrib import messages
 from products.models import Product
 from .models import CartItem
@@ -88,8 +88,35 @@ def cart_page(request):
     total_price = sum(item.product.price * item.quantity for item in cart_items)
     total_discount = sum(item.product.discount * item.quantity for item in cart_items)
     final_price = total_price - total_discount
+    
+    for item in cart_items:
+        product = Product.objects.get(pk=item.product.id)
+        if item.quantity > product.amount:
+            item.quantity = product.amount
+            item.save()
+
     return render(request,'account/cart.html',{'cart_items': cart_items,'total_price': total_price,'total_discount':total_discount,'final_price':final_price})
+
+
 
 @login_required(login_url='login_page')
 def checkout_page(request):
-    return render(request,'account/checkout.html',{})
+    order_items = CartItem.objects.filter(user=request.user)
+    final_price = sum(item.product.discounted_price * item.quantity for item in order_items)
+    if final_price <=0:
+        return redirect('products_page')
+    
+
+
+    form = CheckoutForm(instance=request.user)
+
+    #payment
+    if request.method == 'POST':
+        form = CheckoutForm(request.POST,instance=request.user)
+        if form.is_valid():
+            form.save()
+            #Bank payment API
+            #
+        
+        
+    return render(request,'account/checkout.html',{'orders':order_items,'final_price':final_price,'form':form})

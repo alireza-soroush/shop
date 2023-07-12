@@ -96,6 +96,9 @@
                     <a class="a-button radius55 py-3 px-4 text-center mt-3" href="{%url 'checkout_page'%}">
                         <span class="ml-2">ثبت سفارش و پرداخت</span>
                     </a>
+                    <a class="a-button radius55 py-3 px-4 text-center mt-3" href="#">
+                        <span class="ml-2">پیگیری خرید ها</span>
+                    </a>
             </div>
             </div>
 
@@ -163,13 +166,13 @@
                                         </div>
                                     </div>
                                     
+                                    {%endfor%}
+                                    {%else%}
+                                    <div class="text-center">
+                                        <h1>سبد خرید خالی است.</h1>
+                                    </div>
+                                    {%endif%}
                                 </div>
-                                {%endfor%}
-                                {%else%}
-                                <div class="text-center">
-                                    <h1>سبد خرید خالی است.</h1>
-                                </div>
-                                {%endif%}
                             </div>
                                     
                             </div>

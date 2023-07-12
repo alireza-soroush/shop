@@ -60,7 +60,7 @@ class User(AbstractUser):
     email = models.EmailField(_('email address'), unique=True)
 
     #personal info
-    gender = models.CharField('جنسیت',choices=GENDERS,max_length=7,default=('none','هیچکدام'))
+    gender = models.CharField('جنسیت',choices=GENDERS,max_length=7,default=('none','هیچکدام'),blank=True)
     image = models.ImageField('عکس',upload_to=rename_profile_pic,default='profile/fca26d60-61dc-49da-b217-d5e760580630.png',null=True,blank=True)
     company = models.CharField(_("کمپانی"),max_length=25,null=True,blank=True)
     area = models.CharField(_("منطقه"),max_length=25,null=True,blank=True)
@@ -94,3 +94,7 @@ class CartItem(models.Model):
 
     def __str__(self):
         return f"{self.quantity} x {self.product.title} - {self.user.email}"
+    
+    @property
+    def complete_price(self):
+        return self.product.discounted_price * self.quantity
