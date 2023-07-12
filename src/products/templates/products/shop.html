@@ -11,6 +11,26 @@
     <link href="{%static 'assets/Css/Style.css'%}" rel="stylesheet" />
     <link href="{%static 'assets/Css/owl.carousel.min.css'%}" rel="stylesheet" />
     <link href="{%static 'assets/Css/owl.theme.min.css'%}" rel="stylesheet" />
+
+    <script type="text/javascript">
+        var user = '{{request.user}}'
+        function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+}
+    const csrftoken = getCookie('csrftoken');
+    </script>
 </head>
 
 <body class="rtl">
@@ -126,7 +146,13 @@
                                 </a>
                                 <div>
                                     <h5 class="my-2 YekanBakhFaNum-SemiBold"><a class="card-pro" href="{%url 'product_object' product.id%}">{{product.title}}</a></h5>
+                                    {%if product.discount%}
+                                    <span class="color-orange YekanBakhFaNum-Bold fa18" style="text-decoration: line-through; color: #999;">{{product.price|intcomma:False}}</span>
+                                    <b style="color:#999;">|</b>
+                                    <span class="color-orange YekanBakhFaNum-Bold fa18">{{product.discounted_price|intcomma:False}}</span>
+                                    {%else%}
                                     <span class="color-orange YekanBakhFaNum-Bold fa18">{{product.price|intcomma:False}}</span>
+                                    {%endif%}
                                     <span class="color-orange YekanBakhFaNum-Regular fa14">تومان</span>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="d-flex">
@@ -138,7 +164,7 @@
                                                     <path d="M19.2601 7.5H3.92005C3.50005 7.5 3.16005 7.82 3.12005 8.23L2.76005 12.58C2.62005 14.29 3.96005 15.75 5.67005 15.75H16.7901C18.2901 15.75 19.6101 14.52 19.7201 13.02L20.0501 8.35C20.0901 7.89 19.7301 7.5 19.2601 7.5Z" fill="#FFAA00"/>
                                                     </svg>
                                                 {%if product.amount%}
-                                                <span class="text-center"><a style="color: black;" href="{%url 'add_to_cart' product.id%}">افزودن به سبد خرید</a></span>
+                                                <span class="text-center update-cart" data-product="{{product.id}}" data-action="add"><a style="color: black;">افزودن به سبد خرید</a></span>
                                                 {%else%}
                                                 <span class="text-center">اتمام موجودی</span>
                                                 {%endif%}
@@ -173,6 +199,6 @@
         <script src="{%static 'assets/Js/bootstrap.min.js'%}"></script>
         <script src="{%static 'assets/Js/my-script.js'%}"></script>
         <script src="{%static 'assets/Js/custom.js'%}"></script>
-       
+        <script src="{%static 'assets/Js/cart.js'%}"></script>
 </body>
 </html>

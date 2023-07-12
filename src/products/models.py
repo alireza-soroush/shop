@@ -23,6 +23,9 @@ class Product(models.Model):
     def __str__(self):
         return self.title
     
+    @property
+    def discounted_price(self):
+        return self.price - self.discount
 
 class ProductComment(models.Model):
     user = models.ForeignKey('account.User',verbose_name='کاربر',on_delete=models.CASCADE)

@@ -5,6 +5,10 @@ from .forms import Userform,UserCreation
 from django.contrib import messages
 from products.models import Product
 from .models import CartItem
+from django.http import JsonResponse
+import json
+
+
 def login_page(request):
     if request.user.is_authenticated:
         return redirect('homepage')
@@ -59,52 +63,28 @@ def profile_page(request):
     return render(request,'account/profile.html',{'form':form,})
 
 
-
-
 @login_required(login_url='login_page')
-def add_to_cart(request, p_id):
-    product = Product.objects.get(id=p_id)
-    if product.amount > 0:
-        cart_item, created = CartItem.objects.get_or_create(user=request.user, product=product)
-        if not created:
-            if product.amount <= cart_item.quantity:
-                messages.error(request,'متاسفانه مقدار بیشتر در انبار موجود نمیباشد.')
-            else:
-                cart_item.quantity += 1
-                cart_item.save()            
+def updatecart(request):
+    data=json.loads(request.body)
+    productid= data['productId']
+    action = data['action']
+    product=Product.objects.get(id=productid)
+    Item,created= CartItem.objects.get_or_create(user=request.user, product=product,)
+    if action=='add':
+        if product.amount > Item.quantity:
+            Item.quantity += 1
+    elif action=='remove':
+        Item.quantity -= 1 
     else:
-        messages.error(request,'متاسفانه مقدار بیشتر در انبار موجود نمیباشد.')
-    return redirect('cart_page')
-
-@login_required(login_url='login_page')
-def remove_from_cart(request, p_id):
-    product = Product.objects.get(id=p_id)
-    cart_item, created = CartItem.objects.get_or_create(user=request.user, product=product)
-    if not created:
-        if cart_item.quantity <= 1:
-            cart_item.delete()
-        else:
-            cart_item.quantity -= 1
-            cart_item.save()
-    return redirect('cart_page')
-
-
-
-def check_product_quantity(items):
-    for p in items:
-        product = Product.objects.get(pk=p.product.id)
-        if product.amount < p.quantity:
-            if product.amount == 0:
-                p.delete()
-            else:
-                p.quantity = product.amount
-                p.save()
+        return JsonResponse('Wrong operation',safe=False)
+    Item.save()
+    if Item.quantity <= 0:
+        Item.delete()
+    return JsonResponse('Item was updated',safe=False)
 
 @login_required(login_url='login_page')
 def cart_page(request):
     cart_items = CartItem.objects.filter(user=request.user)
-    check_product_quantity(cart_items)
-    cart_items = CartItem.objects.filter(user=request.user) #for updating cart items after changing in check_product_quantity function
     total_price = sum(item.product.price * item.quantity for item in cart_items)
     total_discount = sum(item.product.discount * item.quantity for item in cart_items)
     final_price = total_price - total_discount

@@ -5,12 +5,12 @@ from django.core.paginator import Paginator
 from .forms import ProductCommentsForm
 from django.contrib.auth.decorators import login_required
 
+
 def product_page(request):
     #categories
     categories = ProductCategory.objects.all()[:5]
     category = request.GET.get('category')
     order = request.GET.get('order')
-    print(order)
     #products
     if category:
         p_category = ProductCategory.objects.get(pk=category)
@@ -36,7 +36,6 @@ def product_page(request):
     page = request.GET.get('page')
     products = paginated.get_page(page)
 
-    
     return render(request,'products/shop.html',{'products':products,'categories':categories,'category':category,'order':order})
 
 
