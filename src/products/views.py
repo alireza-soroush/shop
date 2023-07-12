@@ -39,7 +39,7 @@ def product_page(request):
     return render(request,'products/shop.html',{'products':products,'categories':categories,'category':category,'order':order})
 
 
-def product_object(request,p_id):
+def product_object(request,p_id,slug):
     product = Product.objects.get(pk=p_id)
     products = Product.objects.all().filter(~Q(id=p_id)).order_by('?')[:5]
 

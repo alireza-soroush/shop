@@ -1,11 +1,16 @@
 from django.db import models
-
+from alireza.DjangoTools import rename_file
+from slugify import slugify
+from alireza.UsefulTools import random_string
+def rename_profile_pic(instance,filename):
+    return rename_file(instance,filename,hardpath='blogs')
 
 class Blog(models.Model):
     title = models.CharField('موضوع',max_length=25,null=False,blank=False)
     description = models.TextField('متن',max_length=5000,null=False,blank=False)
     author = models.CharField('نویسنده',max_length=50)
-    image = models.ImageField('عکس',)
+    slug = models.SlugField(editable=False,blank=True)
+    image = models.ImageField('عکس',upload_to=rename_profile_pic)
     date = models.DateTimeField('تاریخ',auto_now_add=True)
 
     @property
@@ -25,7 +30,11 @@ class Blog(models.Model):
          verbose_name = 'بلاگ'
          verbose_name_plural = "بلاگ"
 
-
+    def save(self,*args,**kwargs):
+        self.slug = slugify(self.title)
+        if len(self.slug)<1:
+            self.slug=random_string(10,True)
+        super().save(*args,**kwargs)
 
 class BlogComment(models.Model):
     user = models.ForeignKey('account.User',verbose_name='کاربر',on_delete=models.CASCADE)

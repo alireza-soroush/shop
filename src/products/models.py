@@ -1,6 +1,10 @@
 from django.db import models
-from alireza.django_tools import rename_file
+from alireza.DjangoTools import rename_file
+from alireza.UsefulTools import random_string
+from slugify import slugify
 
+def rename_profile_pic(instance,filename):
+    return rename_file(instance,filename,hardpath='products')
 class Product(models.Model):
     title = models.CharField('محصول',max_length=20,null=False,blank=False)
     description = models.CharField('توضیحات',max_length=50,null=False,blank=False)
@@ -10,10 +14,10 @@ class Product(models.Model):
     price = models.PositiveIntegerField('قیمت',null=False,blank=False)
     sales = models.SmallIntegerField('فروش',default=0,editable=False)
     discount = models.PositiveIntegerField('تخفیف' , default=0)
-    image = models.ImageField('عکس',upload_to=rename_file)
+    image = models.ImageField('عکس',upload_to=rename_profile_pic)
 
 
-
+    slug = models.SlugField(editable=False,blank=True)
     date = models.DateTimeField('تاریخ',auto_now_add=True)
 
     class Meta :
@@ -26,6 +30,12 @@ class Product(models.Model):
     @property
     def discounted_price(self):
         return self.price - self.discount
+    
+    def save(self,*args,**kwargs):
+        self.slug = slugify(self.title)
+        if len(self.slug) < 1:
+            self.slug=random_string(10,True)
+        super().save(*args,**kwargs)
 
 class ProductComment(models.Model):
     user = models.ForeignKey('account.User',verbose_name='کاربر',on_delete=models.CASCADE)

@@ -39,7 +39,7 @@ def blog_page(request):
 
 
 
-def blog_object(request,b_id):
+def blog_object(request,b_id,slug):
     #get ip
     blog_details=Blog.objects.get(pk=b_id)
     def get_client_ip(request):
@@ -52,7 +52,7 @@ def blog_object(request,b_id):
     
     BlogViews.objects.get_or_create(IPAddres=get_client_ip(request) , blog=blog_details)
     
-    #recomended
+    #recommended
     recommended = Blog.objects.order_by('?').exclude(pk=b_id)[0:3]
 
     #Blog comment form

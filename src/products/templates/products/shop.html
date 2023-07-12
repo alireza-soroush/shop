@@ -141,11 +141,11 @@
                         {%for product in products%}
                         <div class="col-lg-4 col-md-6 mb-4">
                             <div class="card-body mb-3 text-center">
-                                <a href="{%url 'product_object' product.id%}">
+                                <a href="{%url 'product_object' slug=product.slug p_id=product.id%}">
                                     <img class="img-fluid" src="{{product.image.url}}" style="width:60%; height: 40%;" >
                                 </a>
                                 <div>
-                                    <h5 class="my-2 YekanBakhFaNum-SemiBold"><a class="card-pro" href="{%url 'product_object' product.id%}">{{product.title}}</a></h5>
+                                    <h5 class="my-2 YekanBakhFaNum-SemiBold"><a class="card-pro" href="{%url 'product_object' slug=product.slug p_id=product.id%}">{{product.title}}</a></h5>
                                     {%if product.discount%}
                                     <span class="color-orange YekanBakhFaNum-Bold fa18" style="text-decoration: line-through; color: #999;">{{product.price|intcomma:False}}</span>
                                     <b style="color:#999;">|</b>

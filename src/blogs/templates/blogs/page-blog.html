@@ -107,9 +107,9 @@
                         <ul>
                             <li class="my-1">
                                 <div class="d-flex align-items-center justify-content-between">
-                                    <a href="{%url 'blog_object' recommend.id%}"><img src="{{recommend.image.url}}" /></a>
+                                    <a href="{%url 'blog_object' slug=recommend.slug b_id=recommend.id%}"><img src="{{recommend.image.url}}" /></a>
                                     <div class="mr-2">
-                                        <a href="{%url 'blog_object' recommend.id%}"><span style="display: block;
+                                        <a href="{%url 'blog_object' slug=recommend.slug b_id=recommend.id%}"><span style="display: block;
                                             width: 140px;
                                             overflow: hidden;
                                             white-space: nowrap;

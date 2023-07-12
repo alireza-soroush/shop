@@ -101,9 +101,9 @@
                         <ul>
                             <li class="my-1">
                                 <div class="d-flex align-items-center justify-content-between">
-                                    <a href="{%url 'blog_object' recommend.id%}"><img src="{{recommend.image.url}}" /></a>
+                                    <a href="{%url 'blog_object' slug=recommend.slug b_id=recommend.id%}"><img src="{{recommend.image.url}}" /></a>
                                     <div class="mr-2">
-                                        <a href="{%url 'blog_object' recommend.id%}"><span style="display: block;
+                                        <a href="{%url 'blog_object' slug=recommend.slug b_id=recommend.id%}"><span style="display: block;
                                             width: 140px;
                                             overflow: hidden;
                                             white-space: nowrap;
@@ -126,19 +126,19 @@
 
                             <div class="card p-3 mb-3 carding-blog overlyblog">
 
-                                <a href="{%url 'blog_object' blog.id%}">
+                                <a href="{%url 'blog_object' slug=blog.slug b_id=blog.id%}">
                                     <img src="{{blog.image.url}}" alt="Loading..." style="width: 100%;height: 100px;">
                                 </a>
 
                                 <div class="p_relative">
-                                    <h5 class="mt-5 YekanBakhFaNum-Bold"><a href="{%url 'blog_object' blog.id%}">{{blog.title}}</a></h5>        
-                                    <a href="{%url 'blog_object' blog.id%}"><span style="display: block;
+                                    <h5 class="mt-5 YekanBakhFaNum-Bold"><a href="{%url 'blog_object' slug=blog.slug b_id=blog.id%}">{{blog.title}}</a></h5>        
+                                    <a href="{%url 'blog_object' slug=blog.slug b_id=blog.id%}"><span style="display: block;
                                         width: 220px;
                                         overflow: hidden;
                                         white-space: nowrap;
                                         text-overflow: ellipsis;">{{blog.description}}</a>
                                     <div class="d-flex align-items-center justify-content-end mt-3 px-2">
-                                        <a class="d-flex justify-content-center align-items-center" href="{%url 'blog_object' blog.id%}">
+                                        <a class="d-flex justify-content-center align-items-center" href="{%url 'blog_object' slug=blog.slug b_id=blog.id%}">
                                             <span class="ml-2 show-more">ادامه مطلب</span> 
                                             <svg width="12" height="11" viewBox="0 0 12 11" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M10.8019 6.17453H2.56566C2.00285 6.17453 1.53613 5.70782 1.53613 5.14501C1.53613 4.5822 2.00285 4.11548 2.56566 4.11548H10.8019C11.3647 4.11548 11.8314 4.5822 11.8314 5.14501C11.8314 5.70782 11.3647 6.17453 10.8019 6.17453Z" fill="#FFAA00"/>

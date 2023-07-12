@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.utils.translation import gettext_lazy as _
 from django.core.validators import RegexValidator
-from alireza.django_tools import rename_file
+from alireza.DjangoTools import rename_file
 
 class UserManager(BaseUserManager):
     """Define a model manager for User model with no username field."""
