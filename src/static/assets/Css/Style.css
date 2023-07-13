@@ -506,14 +506,6 @@ h1, h2, h3, h4, h5, h6 {
     background: rgba(254, 191, 15, 0.10);
 }
 
-.question-bg{
-    margin-top: 1rem;
-    background-image: url(../Img/vector_back1.png);
-    background-repeat: no-repeat;
-    background-position-x: center;
-    background-size: auto;
-}
-
 .p-6{
     padding: 3rem 6rem;
 }

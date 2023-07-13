@@ -1,6 +1,7 @@
-alireza==0.0.2
+alireza==0.0.4
 Django==4.2
 django-jalali-date==1.0.2
 django-widget-tweaks==1.4.12
 Pillow==9.5.0
 python-gettext==5.0
+python-slugify==8.0.1

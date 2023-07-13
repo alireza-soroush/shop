@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product,ProductComment,ProductCategory
+from .models import Product,ProductComment,ProductCategory,ProductMainCategory
 from jalali_date import datetime2jalali
 
 
@@ -159,3 +159,14 @@ class ProductComment(admin.ModelAdmin):
     @admin.display(description='تاریخ')
     def get_created_jalali(self, obj):
         return datetime2jalali(obj.date).strftime('%a, %d %b %Y %H:%M:%S')
+
+
+
+
+
+@admin.register(ProductMainCategory)
+class ProductMainCategory(admin.ModelAdmin):
+    list_display = ('category','inside_category_items')
+    ordering = ('-id',)
+    search_fields = ('category',)
+    list_filter = ('category',)

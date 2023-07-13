@@ -40,7 +40,7 @@ class Product(models.Model):
 class ProductComment(models.Model):
     user = models.ForeignKey('account.User',verbose_name='کاربر',on_delete=models.CASCADE)
     forproduct = models.ForeignKey(Product,verbose_name='برای محصول',on_delete=models.CASCADE)
-    comment = models.TextField('کامنت',max_length=200)
+    comment = models.TextField('کامنت',max_length=80)
     date = models.DateTimeField('تاریخ',auto_now_add=True)
 
     class Meta :
@@ -64,4 +64,19 @@ class ProductCategory(models.Model):
         return self.products.count()
     inside_items.fget.short_description = 'تعداد محصول'
 
+
+def rename_category_pic(instance,filename):
+    return rename_file(instance,filename,hardpath='category images')
     
+class ProductMainCategory(models.Model):
+    category = models.ForeignKey(ProductCategory,on_delete=models.CASCADE,verbose_name='دسته بندی اصلی')
+    image = models.ImageField('عکس',null=False,blank=False ,upload_to=rename_category_pic)
+
+    class Meta :
+        verbose_name = 'دسته بندی اصلی محصول'
+        verbose_name_plural = "دسته بندی اصلی محصولات"
+
+    @property
+    def inside_category_items(self):
+        return self.category.inside_items
+    inside_category_items.fget.short_description = 'تعداد محصول درون دسته بندی'
