@@ -45,9 +45,23 @@
         </section>
         
         <section class="text-lg-right text-center my-4">
-
+            
             <div class="container">
                 <div class="card p-5 p-checkout">
+                    <!-- error -->
+                    {% if form.errors %}
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                            {{error}}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        {% endfor %}
+                    {% endfor %}
+                {% endif %}
+                <!-- end error -->
                 <div class="row">
                     
                     <form class="contact-form d-flex justify-content-between form-checkout" method="post">
@@ -94,17 +108,17 @@
 
                                 <div class="form-group col-md-6">
                                     <label for="inputEmail4">پلاک :</label>
-                                    {%render_field form.house_plate class="form-control mb-1"%}
+                                    {%render_field form.house_plate class="form-control mb-1" title="لطفا یک عدد وارد کنید."%}
                                 </div>
 
                                 <div class="form-group col-md-6">
                                     <label for="inputEmail4">کدپستی:</label>
-                                    {%render_field form.zipcode class="form-control mb-1"%}
+                                    {%render_field form.zipcode class="form-control mb-1" title="لطفا یک عدد وارد کنید."%}
                                 </div>
 
                                 <div class="form-group col-md-6">
-                                    <label for="inputEmail4">تلفن:</label>
-                                    {%render_field form.phone class="form-control mb-1"%}
+                                    <label for="inputEmail4">شماره موبایل:</label>
+                                    {%render_field form.phone class="form-control mb-1" title="لطفا یک عدد وارد کنید."%}
                                 </div>
         
                                 </div>

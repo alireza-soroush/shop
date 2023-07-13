@@ -16,6 +16,9 @@
            color: transparent;
            
         }
+        .image-input>input{
+            display: none;
+        }
     </style>
 </head>
 
@@ -44,16 +47,48 @@
                         
         
                         </div>
-                    <div class="card p-5">
+                    <div class="card p-4">
+                    <!-- error -->
+                    {% if form.errors %}
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                            {{error}}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        {% endfor %}
+                    {% endfor %}
+                {% endif %}
+                <!-- end error -->    
+                        
                     <form class="contact-form" method="POST" enctype="multipart/form-data">
                         {%csrf_token%}
                         <center>
                         <div class="col-lg-5 d-flex align-items-center" >
                             <img src="{{request.user.image.url}}" class="img-fluid wapp" style="width: 300px;height: 300px;border-radius: 50%;"/>
-                        </div></center><br>
-                        <div class="align-items-center">
-                        <label for="image"> تغییر عکس  </label>
-                        {%render_field form.image%}</div>
+                        </div></center>
+                        
+                        <div class="col-lg-10 align-items-center image-input">
+                            
+                            <label for="id_image"><br>
+
+                                <svg xmlns="http://www.w3.org/2000/svg" width="150" height="50">
+                                    <rect x="0" y="0" rx="25" ry="25" width="150" height="50" fill="#FFAA00" />
+                                    <text x="50%" y="50%" text-anchor="middle" dy="0.35em" fill="#0000000" font-size="17px" font-family="YekanBakhFaNum-Light">تغییر عکس</text>
+                                  </svg>
+                                </label>   
+                                <label>
+                                    <a href="{%url 'remove_profile_image'%}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="150" height="50">
+                                    <rect x="0" y="0" rx="25" ry="25" width="150" height="50" fill="#FF0000 " />
+                                    <text x="50%" y="50%" text-anchor="middle" dy="0.35em" fill="#0000000" font-size="17px" font-family="YekanBakhFaNum-Light">حذف عکس</text></b>
+                                  </svg></a>
+                                </label> 
+                            {%render_field form.image%}
+                            
+                        </div>
                         <hr>
                         <div class="form-row">
                             <div class="form-group col-md-6">
@@ -63,7 +98,7 @@
                                 {%render_field form.last_name  class="form-control mb-2" placeholder="نام خانوادگی"%}
                             </div>
                             <div class="form-group col-md-6">
-                                {%render_field form.phone class="form-control mb-2" placeholder="شماره موبایل"%}
+                                {%render_field form.phone class="form-control mb-2" placeholder="شماره موبایل" title="لطفا یک عدد وارد کنید."%}
                             </div>
                             <div class="form-group col-md-6">
                                 {%render_field form.email class="form-control mb-2" placeholder="پست الکترونیکی"%}
@@ -84,16 +119,16 @@
                                 {%render_field form.street class="form-control mb-2" placeholder="خیابان"%}
                             </div>
                             <div class="form-group col-md-6">
-                                {%render_field form.house_plate class="form-control mb-2" placeholder="پلاک"%}
+                                {%render_field form.house_plate class="form-control mb-2" placeholder="پلاک" title="لطفا یک عدد وارد کنید."%}
                             </div>
                             <div class="form-group col-md-6">
-                                {%render_field form.zipcode class="form-control mb-2" placeholder="کدپستی"%}
+                                {%render_field form.zipcode class="form-control mb-2" placeholder="کدپستی" title="لطفا یک عدد وارد کنید."%}
                             </div>
                             <div class="form-group col-md-6">
                                 {%render_field form.gender  class="form-control mb-2" style="height: 87%;"%}
                             </div>
                             <div class="form-group col-md-6 d-flex justify-content-start">
-                                <button type="submit" style="width: 100%;" class="btn btn-lightorng login-btn">تغییر پروفایل</button>
+                                <button type="submit" style="width: 100%;" class="btn btn-lightorng login-btn">ثبت تغییرات</button>
                             </div>
                             <div class="form-group col-md-6 d-flex justify-content-end">
                                 <a class="btn btn-lightorng login-btn" style="width: 100%;" href="{%url 'homepage'%}">رفتن به تغییر رمز</a>

@@ -4,9 +4,19 @@ from django.contrib.auth.decorators import login_required
 from .forms import Userform,UserCreation,CheckoutForm
 from django.contrib import messages
 from products.models import Product
-from .models import CartItem
+from .models import CartItem,User
 from django.http import JsonResponse
 import json
+from django.conf import settings
+import os
+
+
+
+
+DEFAULT_PROFILE_IMAGE_NAME = 'Default_Profile.png'
+DEFAULT_PROFILE_IMAGE_PATH = os.path.join(settings.MEDIA_ROOT,'/defaults/'+DEFAULT_PROFILE_IMAGE_NAME)
+
+
 
 
 def login_page(request):
@@ -49,6 +59,17 @@ def signup_page(request):
                     login(request,user)
                     return redirect('homepage')
         return render(request,'account/sign-up.html',{'form':form})
+
+
+@login_required(login_url='login_page')
+def remove_profile_pic(request):
+    image_name = request.user.image.name.split('/')[-1]
+    if image_name != DEFAULT_PROFILE_IMAGE_NAME:
+        user =  User.objects.get(pk=request.user.id)
+        user.image = DEFAULT_PROFILE_IMAGE_PATH
+        user.save()
+    return redirect('profile_page')
+
 
 
 @login_required(login_url='login_page')

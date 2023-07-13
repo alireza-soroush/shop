@@ -61,7 +61,7 @@ class User(AbstractUser):
 
     #personal info
     gender = models.CharField('جنسیت',choices=GENDERS,max_length=7,default=('none','هیچکدام'),blank=True)
-    image = models.ImageField('عکس',upload_to=rename_profile_pic,default='profile/fca26d60-61dc-49da-b217-d5e760580630.png',null=True,blank=True)
+    image = models.ImageField('عکس',upload_to=rename_profile_pic,default='defaults/Default_Profile.png')
     company = models.CharField(_("کمپانی"),max_length=25,null=True,blank=True)
     area = models.CharField(_("منطقه"),max_length=25,null=True,blank=True)
     state= models.CharField(_("استان"),max_length=30,null=True,blank=True)
