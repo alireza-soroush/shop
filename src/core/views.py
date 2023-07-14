@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from products.models import Product,ProductComment,ProductMainCategory
 from blogs.models import Blog
-
-
+from products.models import Product
+from datetime import datetime
 
 def homepage(request):
     products = Product.objects.order_by('-date')[:8]
@@ -17,7 +17,10 @@ def gallery_page(request):
     return render(request,'gallery.html',{})
 
 def about_page(request):
-    return render(request,'about-us.html',{})
+    products = Product.objects.count()
+    experience = datetime.now().year - 2008
+    customers = sum([product.sales for product in Product.objects.all()])
+    return render(request,'about-us.html',{'products':products,'experience':experience,'customers':customers})
 
 def contact_page(request):
     return render(request,'contact-us.html',{})
