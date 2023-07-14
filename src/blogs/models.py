@@ -19,8 +19,8 @@ class Blog(models.Model):
     views.fget.short_description = 'بازدید ها'
     
     @classmethod
-    def get_views(self):
-        for blog in self.objects.all():
+    def get_views(cls):
+        for blog in cls.objects.all():
             yield(blog.id,blog.views)
     
 

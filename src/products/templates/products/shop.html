@@ -1,5 +1,6 @@
 {%load static%}
 {%load humanize%}
+{%load widget_tweaks%}
 <html dir="rtl" lang="fa-IR">
 <head>
     <title>صفحه فروشگاه - دمو 1</title>
@@ -57,7 +58,6 @@
                 </div>
             </div>
         </section>
-
         <section class="container mb-4">
             <div class="row">
                 <div class="col-xl-3 order-xl-0 pt-3 order-1 mb-3">
@@ -70,10 +70,19 @@
                         
         
                     </div>   
+                    
 
                     <div class="card side-category p-4 mb-3">
                             <ul class="list-unstyled">
-                            
+                                <li>
+                                    <form method="get" action="{%url 'products_page'%}">
+                                        {%render_field search_form.query name="search" id="search" style="border-radius: 10px;padding: 2px;border: 1px solid #000000; width: 72%;" placeholder="جست و جو"%}
+                                    <button  class="btn btn-outline-dark" type="submit" >
+                                    <b>بگرد</b>
+                                    </button>
+                                </form>
+                                </li>
+                                <hr>
                             <li><a href="?order=latest"><span>جدیدترین</span></a>
                                 <a href="?order=latest">
                                     <div class="arrow-cat d-flex align-items-center justify-content-center">
@@ -180,9 +189,15 @@
                         </div>
                         {%endfor%}
                         {%else%}
+                        {%if searching%}
                         <center>
-                          <h1>متاسفانه آیتمی در این دسته بندی وجود ندارد</h1>
+                            <h1>محصولی با این نام پیدا نشد.</h1>
                         </center>
+                        {%else%}
+                        <center>
+                            <h1>متاسفانه محصولی در این دسته بندی وجود ندارد</h1>
+                        </center>
+                        {%endif%}
                         {%endif%}
 
                     </div>

@@ -1,38 +1,48 @@
 from django.shortcuts import render,redirect
 from .models import Blog,BlogViews
 from django.core.paginator import Paginator
-from .forms import BlogForm
+from .forms import BlogForm,BlogSearch
 from django.contrib.auth.decorators import login_required
 
 
 def blog_page(request):
-    #paginate
 
+    #search
+    search_form = BlogSearch(request.GET)
+    results = []
+    if request.method == 'GET':
+        if search_form.is_valid():
+            query = search_form.data['query']
+            results = Blog.objects.filter(title__icontains=query)
+        else:
+            results = Blog.objects.order_by('-date')
+            
+    #blog
     order = request.GET.get('order')
     if order:
         if order == 'latest':
-            paginate = Blog.objects.order_by('-date')
+            paginate = results.order_by('-date')
         elif order == 'oldest':
-            paginate = Blog.objects.order_by('date')
+            paginate = results.order_by('date')
         elif order == 'most-viewed':
             all_views = [i for i in Blog.get_views()]
             all_views.sort(key=lambda x: x[1],reverse=True)
             all_views = [i[0] for i in all_views]
-            paginate = list(map(lambda id: Blog.objects.get(pk=id), all_views))
+            paginate = list(map(lambda id: results.get(pk=id), all_views))
         else:
-            paginate = Blog.objects.order_by('-date')
+            paginate = results.order_by('-date')
     else:
-        paginate = Blog.objects.order_by('-date')
+        paginate = results.order_by('-date')
 
 
-
+    #paginate
     page = request.GET.get('page')
     paginated = Paginator(paginate,6)
     blogs = paginated.get_page(page)
 
-    #recomended
+    #recommended
     recommended = Blog.objects.order_by('?')[0:3]
-    return render(request,'blogs/blog.html',{'blogs':blogs,'recommended':recommended,'order':order})
+    return render(request,'blogs/blog.html',{'blogs':blogs,'recommended':recommended,'order':order,'search_form':search_form})
 
 
 

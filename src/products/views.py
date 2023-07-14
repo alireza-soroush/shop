@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from django.db.models import Q
 from .models import Product,ProductCategory,ProductComment
 from django.core.paginator import Paginator
-from .forms import ProductCommentsForm
+from .forms import ProductCommentsForm,ProductSearch
 from django.contrib.auth.decorators import login_required
 
 
@@ -11,32 +11,44 @@ def product_page(request):
     categories = ProductCategory.objects.all()[:5]
     category = request.GET.get('category')
     order = request.GET.get('order')
+    #search
+    search_form = ProductSearch(request.GET)
+    results = []
+    searching = False
+    if request.method == 'GET':
+        if search_form.is_valid():
+            searching = True
+            query = search_form.data['query']
+            results = Product.objects.filter(title__icontains=query)
+        else:
+            results = Product.objects.order_by('-date')
+            
     #products
     if category:
         p_category = ProductCategory.objects.get(pk=category)
         paginate = p_category.products.all()
     elif order:
         if order=='latest':
-            paginate = Product.objects.order_by('-date')
+            paginate = results.order_by('-date')
         elif order == 'expensive':
-            paginate = Product.objects.order_by('-price')
+            paginate = results.order_by('-price')
         elif order == 'cheap':
-            paginate = Product.objects.order_by('price')
+            paginate = results.order_by('price')
         elif order == 'most-sales':
-            paginate = Product.objects.order_by('-sales')
+            paginate = results.order_by('-sales')
         
         else:
-            paginate = Product.objects.order_by('-date')
+            paginate = results.order_by('-date')
 
     else:
-        paginate = Product.objects.order_by('-date')
+        paginate = results.order_by('-date')
 
     #paginate
     paginated = Paginator(paginate,6)
     page = request.GET.get('page')
     products = paginated.get_page(page)
 
-    return render(request,'products/shop.html',{'products':products,'categories':categories,'category':category,'order':order})
+    return render(request,'products/shop.html',{'products':products,'categories':categories,'category':category,'order':order,'search_form':search_form,'searching':searching})
 
 
 def product_object(request,p_id,slug):
