@@ -11,6 +11,8 @@ def product_page(request):
     categories = ProductCategory.objects.all()[:5]
     category = request.GET.get('category')
     order = request.GET.get('order')
+    print(order)
+    print(category,'\nend')
     #search
     search_form = ProductSearch(request.GET)
     results = []
@@ -26,8 +28,8 @@ def product_page(request):
     #products
     if category:
         p_category = ProductCategory.objects.get(pk=category)
-        paginate = p_category.products.all()
-    elif order:
+        results = p_category.products.all()
+    if order:
         if order=='latest':
             paginate = results.order_by('-date')
         elif order == 'expensive':
@@ -48,7 +50,7 @@ def product_page(request):
     page = request.GET.get('page')
     products = paginated.get_page(page)
 
-    return render(request,'products/shop.html',{'products':products,'categories':categories,'category':category,'order':order,'search_form':search_form,'searching':searching})
+    return render(request,'products/shop.html',{'products':products,'categories':categories,'search_form':search_form,'searching':searching,})
 
 
 def product_object(request,p_id,slug):
