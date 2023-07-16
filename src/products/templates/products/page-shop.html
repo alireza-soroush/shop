@@ -3,7 +3,8 @@
 {%load humanize%}
 <html dir="rtl" lang="fa-IR">
 <head>
-    <title>صفحه محصول - دمو 1</title>
+    <title>فروشگاه پریماه | محصول</title>
+    <link rel="icon" type="image/x-icon" href="{%static 'assets/Img/favicon.ico'%}">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0 , maximum-scale=1">
@@ -49,7 +50,7 @@
                     <div class="bg-package d-flex align-items-center justify-content-center">
                         <div class="breadcrumb radius15">
                             <ul class="">
-                                <li><a href="#">خانه / </a></li>
+                                <li><a href="{%url 'homepage'%}">خانه / </a></li>
                                 <li><a href="#" class="current">صفحه محصول</a></li>
                             </ul>
                         </div>
@@ -131,7 +132,7 @@
                                                     <path d="M7.24563 10.8425L3.38813 12.8706L4.125 8.575L1 5.53313L5.3125 4.90813L7.24125 1L9.17 4.90813L13.4825 5.53313L10.3575 8.575L11.0944 12.8706L7.24563 10.8425Z" fill="#FDC736" stroke="#FDC736" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                                     </svg>     
                                                     
-                                                    <span class="review-no mr-2">{%if comments%}{{comments|length}} تعداد نظرات {%else%}بدون نظر{%endif%}</span>                                                       
+                                                    <span class="review-no mr-2">{%if comments%} تعداد نظرات: {{comments|length}}{%else%}بدون نظر{%endif%}</span>                                                       
                                             </div>
                                           
                                         </div>

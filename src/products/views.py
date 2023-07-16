@@ -11,8 +11,6 @@ def product_page(request):
     categories = ProductCategory.objects.all()[:5]
     category = request.GET.get('category')
     order = request.GET.get('order')
-    print(order)
-    print(category,'\nend')
     #search
     search_form = ProductSearch(request.GET)
     results = []

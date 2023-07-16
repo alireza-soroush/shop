@@ -125,7 +125,7 @@ def checkout_page(request):
     order_items = CartItem.objects.filter(user=request.user)
     final_price = sum(item.product.discounted_price * item.quantity for item in order_items)
     if final_price <=0:
-        return redirect('products_page')
+        return redirect('cart_page')
     
 
 
